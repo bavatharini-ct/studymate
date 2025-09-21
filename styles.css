@@ -527,3 +527,17 @@ textarea{min-height:80px}
 
 /* card always above decor */
 .welcome-card { position: relative; z-index: 2; }
+/* ... your existing CSS code ... */
+
+/* respect reduced motion preference */
+@media (prefers-reduced-motion: reduce) { .decor { animation: none; transform: none; } }
+
+/* ===== Mobile fixes: paste at bottom of styles.css ===== */
+@media (max-width: 780px) {
+  .welcome-card {
+    width: 94% !important;
+    padding: 20px 14px !important;
+    border-radius: 12px !important;
+  }
+  /* ... rest of patch continues ... */
+}
