@@ -1,0 +1,244 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width,initial-scale=1" />
+  <title><title>StudyMate — Smart Study Planner</title>
+</title>
+  <link rel="stylesheet" href="styles.css" />
+</head>
+<body class="dark-theme">
+  <div class="app-shell">
+    <aside class="sidebar" role="navigation">
+      <div class="brand">Smart Study</div>
+      <nav>
+        <button class="nav-btn" data-view="dashboard">Dashboard</button>
+        <button class="nav-btn" data-view="planner">Planner</button>
+        <button class="nav-btn" data-view="calendar">Calendar</button>
+        <button class="nav-btn" data-view="timetracking">Time Tracking</button>
+        <button class="nav-btn" data-view="pomodoro">Pomodoro</button>
+        <button class="nav-btn" data-view="analytics">Analytics</button>
+        <button class="nav-btn" data-view="exportimport">Export / Import</button>
+        <button class="nav-btn" data-view="settings">Settings</button>
+      </nav>
+      <div class="sidebar-footer">Offline • Dark-blue • Silver</div>
+    </aside>
+
+    <main class="main-area">
+      <!-- Dashboard -->
+      <section class="view" id="view-dashboard">
+        <h2>Overview</h2>
+        <div class="dash-grid">
+          <div class="card">
+            <h3>Today's Plan</h3>
+            <ul id="todayTasks"></ul>
+          </div>
+          <div class="card">
+            <h3>Quick Pomodoro</h3>
+            <div id="quickPomodoro"></div>
+          </div>
+          <div class="card">
+            <h3>Streaks & Stats</h3>
+            <div id="miniStats"></div>
+          </div>
+        </div>
+      </section>
+
+      <!-- Planner -->
+      <section class="view hidden" id="view-planner">
+        <h2>Planner</h2>
+        <div class="planner-grid">
+          <div class="card">
+            <h3>Add Task</h3>
+            <form id="taskForm">
+              <label>Subject<input id="subject" required /></label>
+              <label>Title<input id="title" required /></label>
+              <label>Deadline<input type="date" id="deadline"/></label>
+              <label>Priority
+                <select id="priority">
+                  <option value="low">Low</option>
+                  <option value="medium" selected>Medium</option>
+                  <option value="high">High</option>
+                </select>
+              </label>
+              <label>Notes<textarea id="notes"></textarea></label>
+              <div class="form-actions">
+                <button id="addBtn">Add Task</button>
+                <button id="clearAllBtn" type="button">Clear All</button>
+              </div>
+            </form>
+          </div>
+
+          <div class="card">
+            <h3>Your Tasks</h3>
+            <div id="taskListWrap">
+              <ul id="taskList" class="task-list"></ul>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <!-- Calendar -->
+      <section class="view hidden" id="view-calendar">
+        <h2>Calendar</h2>
+        <div class="card">
+          <div id="calendarControls" class="calendar-controls"></div>
+          <div id="calendarGrid"></div>
+        </div>
+      </section>
+
+      <!-- Time Tracking -->
+      <section class="view hidden" id="view-timetracking">
+        <h2>Time Tracking</h2>
+        <div class="card">
+          <div class="time-controls">
+            <label>Attach to task
+              <select id="ttTaskSelect"><option value="">— none —</option></select>
+            </label>
+            <div class="tt-buttons">
+              <button id="ttStart">Start</button>
+              <button id="ttStop" disabled>Stop</button>
+            </div>
+          </div>
+          <h4>Sessions</h4>
+          <ul id="sessionList"></ul>
+        </div>
+      </section>
+
+      <!-- Pomodoro -->
+      <section class="view hidden" id="view-pomodoro">
+        <h2>Pomodoro</h2>
+        <div class="card">
+          <label>Attach to
+            <select id="pomodoroTaskSelect"><option value="">— Select a task —</option></select>
+          </label>
+          <div id="timerDisplay" class="timer-display">25:00</div>
+          <div class="pom-controls">
+            <button id="startBtn">Start</button>
+            <button id="pauseBtn" disabled>Pause</button>
+            <button id="resetBtn">Reset</button>
+          </div>
+          <div class="pom-settings">
+            <label>Focus (min)<input type="number" id="focusMinutes" min="1" value="25"/></label>
+            <label>Break (min)<input type="number" id="breakMinutes" min="1" value="5"/></label>
+          </div>
+          <div class="pom-info">
+            <small id="pomState">State: Ready</small><br/>
+            <small id="pomAttached">Attached: none</small>
+          </div>
+        </div>
+      </section>
+
+      <!-- Analytics -->
+      <section class="view hidden" id="view-analytics">
+        <h2>Analytics</h2>
+        <div class="card">
+          <h4>Weekly Study (minutes)</h4>
+          <canvas id="weeklyChart" width="600" height="200"></canvas>
+        </div>
+        <div class="card">
+          <h4>Pomodoros Completed by Task</h4>
+          <ul id="pomSummary"></ul>
+        </div>
+      </section>
+
+      <!-- Export/Import -->
+      <section class="view hidden" id="view-exportimport">
+        <h2>Export / Import</h2>
+        <div class="card">
+          <button id="exportBtn">Export JSON</button>
+          <input type="file" id="importFile" accept="application/json" />
+        </div>
+      </section>
+
+      <!-- Settings -->
+      <section class="view hidden" id="view-settings">
+        <h2>Settings</h2>
+        <div class="card">
+          <label>Theme
+            <select id="themeSelect">
+              <option value="dark">Dark-blue</option>
+              <option value="light">Light (experimental)</option>
+            </select>
+          </label>
+          <label>First day of week
+            <select id="firstDay">
+              <option value="0">Sunday</option>
+              <option value="1">Monday</option>
+            </select>
+          </label>
+          <label>Auto reminders
+            <input type="checkbox" id="reminders" />
+          </label>
+        </div>
+      </section>
+      <!-- Day Modal: shows when a calendar day is clicked -->
+<div id="dayModal" class="modal hidden" role="dialog" aria-modal="true" aria-labelledby="dayModalTitle">
+  <div class="modal-overlay" id="dayModalOverlay"></div>
+
+  <div class="modal-panel" role="document">
+    <header class="modal-header">
+      <h3 id="dayModalTitle">Tasks for <span id="dayModalDate">YYYY-MM-DD</span></h3>
+      <button id="dayModalClose" class="modal-close" aria-label="Close modal">&times;</button>
+    </header>
+
+    <div class="modal-body">
+      <!-- existing tasks for that day -->
+      <div class="modal-section">
+        <h4>Scheduled tasks</h4>
+        <ul id="dayTaskList" class="task-list-compact">
+          <!-- filled by JS -->
+        </ul>
+        <p id="dayNoTasks" class="muted">No tasks scheduled for this day.</p>
+      </div>
+
+      <hr/>
+
+      <!-- quick add form (adds a task with deadline set to the selected date) -->
+      <div class="modal-section">
+        <h4>Add a task for this date</h4>
+        <form id="dayQuickForm">
+          <label>
+            Subject
+            <input id="daySubject" name="subject" required placeholder="e.g. Math" />
+          </label>
+
+          <label>
+            Title
+            <input id="dayTitle" name="title" required placeholder="e.g. Integration practice" />
+          </label>
+
+          <label>
+            Priority
+            <select id="dayPriority">
+              <option value="low">Low</option>
+              <option value="medium" selected>Medium</option>
+              <option value="high">High</option>
+            </select>
+          </label>
+
+          <label>
+            Notes
+            <textarea id="dayNotes" placeholder="Optional notes..."></textarea>
+          </label>
+
+          <div class="modal-actions">
+            <button type="submit" id="dayAddBtn">Add task</button>
+            <button type="button" id="dayCancelBtn">Cancel</button>
+          </div>
+        </form>
+      </div>
+    </div>
+  </div>
+</div>
+    </main>
+  </div>
+  <script src="https://cdn.jsdelivr.net/npm/canvas-confetti@1.6.0/dist/confetti.browser.min.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/canvas-confetti@1.9.3/dist/confetti.browser.min.js"></script>
+
+  <script src="app.js"></script>
+  <!-- Toast container -->
+<div id="toastContainer"></div>
+
+</body>
+</html>

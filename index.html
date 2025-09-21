@@ -1,0 +1,98 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width,initial-scale=1" />
+  <title><title>StudyMate — Smart Study Planner</title>
+</title>
+  <link rel="stylesheet" href="styles.css" />
+</head>
+<body class="dark-theme">
+
+  <!-- WELCOME SECTION -->
+  <div class="welcome-wrap">
+
+    <!-- center faded open-book -->
+    <svg class="decor decor-center" viewBox="0 0 1200 600" preserveAspectRatio="xMidYMid slice" aria-hidden="true">
+      <g fill="var(--silver-light)" opacity="0.10">
+        <path d="M60 320c48-96 192-144 360-144s312 48 360 144v90H60v-90z"></path>
+        <path d="M220 240c48-24 144-48 240-48s192 24 240 48"
+              stroke="var(--silver-light)" stroke-width="2" opacity="0.12" fill="none"/>
+      </g>
+    </svg>
+
+    <!-- top-left: leaf -->
+    <svg class="decor decor-top-left" viewBox="0 0 64 64" aria-hidden="true">
+      <g fill="var(--silver-light)" opacity="0.25">
+        <path d="M8 44c10-14 24-20 36-18 0 0-6 6-14 12s-18 12-22 14c0 0 2-6 0-8z"/>
+        <path d="M20 30c6-6 14-8 22-6" stroke="var(--silver-light)" stroke-width="0.9" fill="none" opacity="0.18"/>
+      </g>
+    </svg>
+
+    <!-- top-right: lamp -->
+    <svg class="decor decor-top-right" viewBox="0 0 64 64" aria-hidden="true">
+      <g fill="var(--silver-light)" opacity="0.22">
+        <!-- lamp shade -->
+        <path d="M18 18a14 8 0 0 1 28 0l-8 10h-12z"></path>
+        <!-- stand -->
+        <rect x="30" y="28" width="4" height="18" rx="1.2"></rect>
+        <!-- base -->
+        <ellipse cx="32" cy="50" rx="8" ry="3" opacity="0.18"></ellipse>
+      </g>
+    </svg>
+
+    <!-- bottom-left: book stack -->
+    <svg class="decor decor-bottom-left" viewBox="0 0 64 64" aria-hidden="true">
+      <g fill="var(--silver-light)" opacity="0.22">
+        <rect x="6" y="36" width="52" height="6" rx="1.6"></rect>
+        <rect x="8" y="26" width="48" height="6" rx="1.6"></rect>
+        <rect x="10" y="16" width="44" height="6" rx="1.6"></rect>
+        <line x1="14" y1="16" x2="14" y2="42" stroke="var(--bg-dark)" stroke-opacity="0.04" stroke-width="1"/>
+      </g>
+    </svg>
+
+    <!-- bottom-right: desk + cup -->
+    <svg class="decor decor-bottom-right" viewBox="0 0 64 64" aria-hidden="true">
+      <g fill="var(--silver-light)" opacity="0.20">
+        <!-- desk -->
+        <rect x="8" y="36" width="48" height="6" rx="1.2"></rect>
+        <!-- open book -->
+        <rect x="18" y="26" width="18" height="6" rx="1.2"></rect>
+        <!-- cup -->
+        <circle cx="46" cy="26" r="3" opacity="0.85"></circle>
+      </g>
+    </svg>
+
+    <!-- soft background shapes -->
+    <svg class="welcome-bg" viewBox="0 0 1200 600" preserveAspectRatio="xMidYMid slice" aria-hidden="true">
+      <g opacity="0.08" fill="var(--silver-light)">
+        <rect x="120" y="220" rx="12" ry="12" width="420" height="18"></rect>
+        <rect x="110" y="240" rx="12" ry="12" width="450" height="18"></rect>
+        <rect x="100" y="260" rx="12" ry="12" width="480" height="18"></rect>
+      </g>
+      <g opacity="0.06" fill="var(--silver-light)">
+        <path d="M980 80c18 8 34 28 30 48-12 56-92 90-148 92 28-46 60-86 118-140z"></path>
+        <path d="M60 80c-18 8-34 28-30 48 12 56 92 90 148 92-28-46-60-86-118-140z"></path>
+      </g>
+      <ellipse cx="900" cy="480" rx="220" ry="60" fill="var(--silver-light)" opacity="0.04"></ellipse>
+      <ellipse cx="300" cy="480" rx="200" ry="50" fill="var(--silver-light)" opacity="0.04"></ellipse>
+    </svg>
+
+    <!-- card -->
+    <div class="welcome-card" role="button" tabindex="0"
+         onclick="location.href='main.html'"
+         onkeypress="if(event.key==='Enter') location.href='main.html'">
+      <h1 class="welcome-title">Welcome to the Smart Study Planner</h1>
+      <p class="welcome-sub">Plan smart • Study better • Achieve more</p>
+      <p class="welcome-quote">“Small daily progress leads to big wins — start with one focused session.”</p>
+      <div class="welcome-actions">
+        <button class="start-btn" onclick="location.href='main.html'">Start</button>
+      </div>
+    </div>
+
+    <p class="small-note">Works offline • No signup • Student-first</p>
+  </div>
+  <!-- END WELCOME SECTION -->
+
+</body>
+</html>

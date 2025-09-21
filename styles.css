@@ -1,0 +1,529 @@
+:root{
+  /* Dark-blue & silver theme variables */
+  --bg-dark: #071233;
+  --bg-panel: #0d1b3a;
+  --brand: #1e4fff;
+  --silver-light: #cfd8e3;
+  --silver-dark: #9aa7bb;
+  --muted: #98a6b8;
+  --card-bg: rgba(255,255,255,0.02);
+  --glass: rgba(255,255,255,0.03);
+  --success: #22c55e;
+  --danger: #ef4444;
+}
+
+*{box-sizing:border-box;font-family:Inter,system-ui,Arial, sans-serif}
+body.dark-theme{
+  margin:0;
+  min-height:100vh;
+  background:linear-gradient(180deg,var(--bg-dark),#041428);
+  color:var(--silver-light);
+  -webkit-font-smoothing:antialiased;
+}
+.hidden { display: none !important; }
+
+/* Layout shell */
+.app-shell{display:flex;min-height:100vh}
+.sidebar{
+  width:220px;
+  padding:20px;
+  background:linear-gradient(180deg,var(--bg-panel),#08142b);
+  border-right:1px solid rgba(255,255,255,0.03);
+  display:flex;
+  flex-direction:column;
+  gap:12px;
+}
+.brand{font-weight:700;font-size:18px;color:var(--brand);margin-bottom:6px}
+.sidebar nav{display:flex;flex-direction:column;gap:8px}
+.nav-btn{
+  background:transparent;
+  border:0;
+  color:var(--silver-light);
+  padding:10px;
+  border-radius:8px;
+  text-align:left;
+  cursor:pointer;
+}
+.nav-btn:focus,.nav-btn:hover{background:var(--glass);outline:none}
+.sidebar-footer{margin-top:auto;font-size:12px;color:var(--silver-dark)}
+
+.main-area{flex:1;padding:20px;display:block}
+.view{max-width:1100px;margin:0 auto}
+.card{
+  background:var(--card-bg);
+  border:1px solid rgba(255,255,255,0.04);
+  padding:14px;
+  border-radius:12px;
+  margin-bottom:14px;
+}
+.dash-grid{display:grid;grid-template-columns:1fr 1fr 1fr;gap:12px}
+.card h3{margin-top:0}
+
+/* Planner grid */
+.planner-grid{display:grid;grid-template-columns:360px 1fr;gap:12px}
+.task-list{list-style:none;padding:0;margin:0;display:flex;flex-direction:column;gap:8px}
+.task-item{
+  display:flex;
+  justify-content:space-between;
+  align-items:center;
+  padding:10px;
+  border-radius:10px;
+  background:linear-gradient(180deg, rgba(255,255,255,0.01), rgba(255,255,255,0.005));
+  border:1px solid rgba(255,255,255,0.02);
+}
+.task-title{font-weight:600}
+.task-sub{font-size:12px;color:var(--muted)}
+.badge{padding:6px 8px;border-radius:8px;font-size:12px}
+.badge.low{background:#062b12;color:var(--success)}
+.badge.medium{background:#3b2f00;color:#ffd28a}
+.badge.high{background:#3b0606;color:var(--danger)}
+
+.form-actions{display:flex;gap:8px;margin-top:8px}
+input,select,textarea,button{
+  color:var(--silver-light);
+  background:transparent;
+  border:1px solid rgba(255,255,255,0.04);
+  padding:8px;
+  border-radius:8px;
+}
+textarea{min-height:80px}
+
+/* Calendar */
+#calendarGrid{
+  display:grid;
+  grid-template-columns:repeat(7,1fr);
+  gap:6px;
+  margin-top:12px;
+}
+.day-cell{
+  background:transparent;
+  border:1px dashed rgba(255,255,255,0.02);
+  min-height:80px;
+  padding:8px;
+  border-radius:8px;
+}
+.day-num{font-size:12px;color:var(--silver-dark)}
+
+/* Pomodoro timer */
+.timer-display{font-size:40px;font-weight:700;text-align:center;margin:12px 0}
+.pom-controls{display:flex;gap:8px;justify-content:center}
+.pom-controls button{
+  padding:8px 12px;
+  border-radius:8px;
+  border:0;
+  background:var(--brand);
+  color:white;
+}
+
+/* Responsive */
+@media (max-width:900px){
+  .sidebar{display:none}
+  .planner-grid{grid-template-columns:1fr}
+  .dash-grid{grid-template-columns:1fr}
+}
+
+/* --------------------------
+   Enhanced Welcome Page Styles
+   -------------------------- */
+
+/* container holds the svg background and the card */
+.welcome-wrap{
+  position:relative;
+  min-height:100vh;
+  display:flex;
+  align-items:center;
+  justify-content:center;
+  flex-direction:column;
+  gap:18px;
+  padding:24px;
+  overflow:hidden;
+}
+
+/* background svg fills entire stage, sits behind content */
+.welcome-bg{
+  position:absolute;
+  inset:0;
+  width:120%;
+  height:120%;
+  transform:translateY(-6%);
+  pointer-events:none;
+  z-index:0;
+  filter: blur(6px) saturate(.9);
+}
+
+/* card sits above SVG */
+.welcome-card{
+  position:relative;
+  z-index:2;
+  display:flex;
+  flex-direction:column;
+  align-items:center;
+  width:min(760px,92%);
+  background: linear-gradient(180deg, rgba(255,255,255,0.02), rgba(255,255,255,0.01));
+  border:1px solid rgba(255,255,255,0.05);
+  padding:42px 36px;
+  border-radius:18px;
+  text-align:center;
+  color:var(--silver-light);
+  box-shadow: 0 18px 60px rgba(2,6,23,0.65);
+  transition: transform .18s ease, box-shadow .18s ease;
+}
+
+.welcome-card:focus, .welcome-card:hover {
+  transform: translateY(-6px);
+  outline: none;
+  box-shadow: 0 26px 80px rgba(2,6,23,0.75);
+}
+
+/* update title & subtitle */
+.welcome-title {
+  margin: 0;
+  font-size:34px;
+  letter-spacing:0.6px;
+  color: #ffffff;
+  font-weight:800;
+  line-height:1.05;
+}
+
+.welcome-sub {
+  margin:10px 0 0;
+  font-size:16px;
+  color: var(--silver-light);
+  opacity:0.95;
+}
+
+/* motivational quote smaller and softer */
+.welcome-quote {
+  margin-top:14px;
+  font-size:14px;
+  color: var(--silver-dark);
+  opacity:0.9;
+  max-width:640px;
+}
+
+/* Start button: grey box with white text */
+.welcome-actions{ margin-top:18px; width:100%; display:flex; justify-content:center; }
+.start-btn{
+  background:#6b7280;      /* medium grey */
+  color:#fff;              /* white text */
+  border:0;
+  padding:10px 18px;
+  border-radius:10px;
+  font-weight:700;
+  cursor:pointer;
+  box-shadow: 0 6px 18px rgba(27,31,41,0.35);
+}
+.start-btn:hover{ transform:translateY(-3px); box-shadow:0 10px 22px rgba(27,31,41,0.45); }
+
+/* ensure small note is below everything */
+.small-note{ position:relative; z-index:2; color:var(--silver-dark); font-size:13px; opacity:0.9; margin-top:18px; }
+
+/* responsive adjustments */
+@media (max-width:780px){
+  .welcome-title { font-size:26px; }
+  .welcome-card { padding:28px 18px; border-radius:12px; }
+  .welcome-quote { max-width:90%; font-size:13px; }
+  .welcome-bg { transform:translateY(-12%); }
+}
+
+/* =======================
+   Modal Styles (Calendar)
+   ======================= */
+.modal {
+  position: fixed;
+  inset: 0;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  z-index: 50;
+}
+
+.modal.hidden {
+  display: none !important;
+}
+
+.modal-overlay {
+  position: absolute;
+  inset: 0;
+  background: rgba(0,0,0,0.65);
+  backdrop-filter: blur(2px);
+}
+
+.modal-panel {
+  position: relative;
+  z-index: 51;
+  background: var(--bg-panel);
+  color: var(--silver-light);
+  padding: 20px;
+  border-radius: 12px;
+  box-shadow: 0 12px 30px rgba(0,0,0,0.6);
+  width: min(500px, 92%);
+  max-height: 80vh;
+  overflow-y: auto;
+  border: 1px solid rgba(255,255,255,0.08);
+}
+
+.modal-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 12px;
+}
+
+.modal-header h3 {
+  margin: 0;
+  font-size: 18px;
+  font-weight: 700;
+  color: white;
+}
+
+.modal-close {
+  background: transparent;
+  border: none;
+  font-size: 22px;
+  line-height: 1;
+  color: var(--silver-light);
+  cursor: pointer;
+}
+
+.modal-body {
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+}
+
+.modal-section h4 {
+  margin: 0 0 6px;
+  font-size: 15px;
+  color: var(--silver-light);
+}
+
+.task-list-compact {
+  list-style: none;
+  padding: 0;
+  margin: 0;
+}
+
+.task-list-compact li {
+  padding: 6px 8px;
+  border-bottom: 1px solid rgba(255,255,255,0.05);
+  font-size: 14px;
+}
+
+.task-list-compact li:last-child {
+  border-bottom: none;
+}
+
+.modal-actions {
+  display: flex;
+  justify-content: flex-end;
+  gap: 10px;
+  margin-top: 10px;
+}
+
+.modal-actions button {
+  padding: 8px 14px;
+  border: none;
+  border-radius: 8px;
+  cursor: pointer;
+}
+
+#dayAddBtn {
+  background: var(--brand);
+  color: white;
+}
+
+#dayCancelBtn {
+  background: #6b7280;
+  color: white;
+}
+
+/* Calendar dots for tasks */
+.day-dots {
+  margin-top: 6px;
+  display: flex;
+  gap: 4px;
+  flex-wrap: wrap;
+}
+
+.dot {
+  width: 10px;
+  height: 10px;
+  border-radius: 50%;
+  display: inline-block;
+}
+
+.dot.low { background: #22c55e; }    /* green */
+.dot.medium { background: #eab308; } /* yellow */
+.dot.high { background: #ef4444; }   /* red */
+
+.dot.more {
+  font-size: 11px;
+  color: var(--silver-light);
+  font-weight: bold;
+  background: transparent;
+  width: auto;
+  height: auto;
+}
+
+/* Modal entrance animation (fade + lift) */
+.modal .modal-panel{
+  opacity: 0;
+  transform: translateY(12px) scale(0.99);
+  transition: opacity 220ms cubic-bezier(.2,.9,.2,1), transform 220ms cubic-bezier(.2,.9,.2,1);
+  will-change: opacity, transform;
+}
+
+/* when .open is present on .modal, show panel */
+.modal.open .modal-panel{
+  opacity: 1;
+  transform: translateY(0) scale(1);
+}
+
+/* subtle overlay fade */
+.modal-overlay{
+  opacity: 0;
+  transition: opacity 220ms ease;
+}
+.modal.open .modal-overlay{
+  opacity: 1;
+}
+
+/* small close X hover */
+.modal-close:hover { transform: rotate(20deg); transition: transform 180ms ease; }
+
+/* today highlight */
+.day-cell.today {
+  border: 2px solid var(--brand);
+  box-shadow: 0 0 8px rgba(30,79,255,0.6);
+}
+
+/* session list delete button */
+#sessionList button {
+  background: #ef4444;
+  color: white;
+  border: none;
+  border-radius: 6px;
+  padding: 2px 8px;
+  cursor: pointer;
+  font-size: 12px;
+}
+#sessionList button:hover { background: #b91c1c; }
+
+/* Pomodoro summary buttons */
+#pomSummary li { position: relative; }
+
+.pom-btn {
+  padding: 6px 10px;
+  border-radius: 8px;
+  border: 0;
+  cursor: pointer;
+  font-weight: 700;
+  font-size: 13px;
+  color: white;
+  background: rgba(255,255,255,0.06);
+  opacity: 0;                /* hidden by default */
+  pointer-events: none;      /* not clickable when hidden */
+  transition: opacity 0.2s ease;
+}
+#pomSummary li:hover .pom-btn { opacity: 1; pointer-events: auto; }
+
+.pom-btn:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 8px 20px rgba(2,6,23,0.45);
+}
+.pom-btn.dec { background:#ef4444; }   /* red - remove */
+.pom-btn.reset { background:#6b7280; } /* grey - reset */
+
+/* Toast notifications */
+#toastContainer {
+  position: fixed;
+  bottom: 20px;
+  right: 20px;
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+  z-index: 1000;
+}
+.toast {
+  background: rgba(30, 47, 255, 0.9); /* brand blue background */
+  color: white;
+  padding: 10px 16px;
+  border-radius: 8px;
+  font-size: 14px;
+  box-shadow: 0 6px 18px rgba(0,0,0,0.4);
+  animation: fadeInOut 3s forwards;
+}
+.toast.error { background: #ef4444; }   /* red for error */
+.toast.success { background: #22c55e; } /* green for success */
+
+@keyframes fadeInOut {
+  0% { opacity: 0; transform: translateY(20px); }
+  10% { opacity: 1; transform: translateY(0); }
+  90% { opacity: 1; transform: translateY(0); }
+  100% { opacity: 0; transform: translateY(20px); }
+}
+
+/* ===============================
+   Decorative SVGs (Welcome Page)
+   =============================== */
+
+/* all decor elements */
+/* Decorative SVGs (books / lamp / leaf / book spark) */
+.decor {
+  position: absolute;
+  width: 150px;
+  height: auto;
+  z-index: 0;
+  pointer-events: none;
+  transform-origin: center;
+  will-change: transform, opacity;
+  fill: var(--silver-light) !important;
+  stroke: var(--silver-light) !important;
+  opacity: 0.4; /* brighter for visibility */
+  filter: none;
+}
+
+/* exact corner positions */
+.decor-top-left  { top: 20px; left: 20px; }
+.decor-top-right { top: 20px; right: 20px; }
+.decor-bottom-left { bottom: 20px; left: 20px; }
+.decor-bottom-right { bottom: 20px; right: 20px; }
+
+/* center faded big open-book */
+.decor-center {
+  inset: 0;
+  width: 100%;
+  max-width: 1100px;
+  height: auto;
+  opacity: 0.15; /* stronger for visibility */
+  top: 10%;
+  left: 50%;
+  transform: translateX(-50%);
+  z-index: 0;
+  pointer-events: none;
+  fill: var(--silver-light) !important;
+  stroke: var(--silver-light) !important;
+}
+
+/* floating animation */
+@keyframes floatSlow {
+  0%   { transform: translateY(0); }
+  50%  { transform: translateY(-8px); }
+  100% { transform: translateY(0); }
+}
+.decor { animation: floatSlow 8s ease-in-out infinite; }
+
+/* reduced motion */
+@media (prefers-reduced-motion: reduce) {
+  .decor { animation: none; }
+}
+
+
+/* accessibility: disable motion if user prefers */
+@media (prefers-reduced-motion: reduce) {
+  .decor { animation: none; transform: none; }
+}
+
+/* card always above decor */
+.welcome-card { position: relative; z-index: 2; }
